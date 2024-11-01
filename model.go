@@ -1,4 +1,4 @@
-package ts3
+package ts3_webquery
 
 type ServerInfo struct {
 	Body []struct {
