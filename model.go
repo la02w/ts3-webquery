@@ -1,14 +1,14 @@
 package ts3_webquery
 
+type ServerInfos struct {
+	Body   []ServerInfo `json:"body"`
+	Status Status       `json:"status"`
+}
 type ServerInfo struct {
-	Body []struct {
-		// serverinfo
-		ServerName      string `json:"virtualserver_name"`
-		ServerUpTime    string `json:"virtualserver_uptime"`
-		ServerMessage   string `json:"virtualserver_welcomemessage"`
-		ServerMaxClient string `json:"virtualserver_maxclients"`
-	} `json:"body"`
-	Status Status `json:"status"`
+	ServerName      string `json:"virtualserver_name"`
+	ServerUpTime    string `json:"virtualserver_uptime"`
+	ServerMessage   string `json:"virtualserver_welcomemessage"`
+	ServerMaxClient string `json:"virtualserver_maxclients"`
 }
 
 type ChannelOptions struct {
@@ -34,17 +34,19 @@ type ChannelListInfo struct {
 	ChannelMaxClient string `json:"max_client"`
 	ChannelURL       string `json:"url"`
 }
+type ChannelInfos struct {
+	Body   []ChannelInfo `json:"body"`
+	Status Status        `json:"status"`
+}
 type ChannelInfo struct {
-	Body []struct {
-		ChannelMaxClient string `json:"channel_maxclients"`
-	} `json:"body"`
-	Status Status `json:"status"`
+	ChannelMaxClient string `json:"channel_maxclients"`
 }
 type ClientList struct {
-	Body []struct {
-		ClientNickname string `json:"client_nickname"`
-	} `json:"body"`
-	Status Status `json:"status"`
+	Body   []ClientListInfo `json:"body"`
+	Status Status           `json:"status"`
+}
+type ClientListInfo struct {
+	ClientNickname string `json:"client_nickname"`
 }
 type ChannelCreate struct {
 	Body []struct {

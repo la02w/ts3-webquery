@@ -3,7 +3,6 @@ package ts3_webquery
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/url"
 )
 
@@ -14,13 +13,11 @@ func (c *Client) ChannelList() (*ChannelList, error) {
 	url := c.WebQuery + "/1/channellist?api-key=" + c.APIKey
 	body, err := Get(url)
 	if err != nil {
-		log.Println("Error reading response body:", err)
 		return nil, err
 	}
 	var response ChannelList
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		log.Println("Error unmarshalling JSON:", err)
 		return nil, err
 	}
 	return &response, nil
@@ -33,13 +30,11 @@ func (c *Client) ChannelInfo(cid string) (*ChannelInfo, error) {
 	url := c.WebQuery + "/1/channelinfo?api-key=" + c.APIKey + "&cid=" + cid
 	body, err := Get(url)
 	if err != nil {
-		log.Println("Error reading response body:", err)
 		return nil, err
 	}
 	var response ChannelInfo
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		log.Println("Error unmarshalling JSON:", err)
 		return nil, err
 	}
 	return &response, nil
@@ -62,12 +57,7 @@ func (c *Client) ChannelMove(cid string, cpid string, order string) (any, error)
 // Creates a new channel using the given properties and displays its ID. Note that this command accepts multiple properties which means that you're able to specifiy all settings of the new channel at once. For detailed information, see Channel Properties.
 //
 // 创建一个新频道，使用给定的属性并显示其 ID。请注意，此命令接受多个属性，这意味着你能够一次性指定新频道的所有设置。有关详细信息，请参阅频道属性。
-func (c *Client) ChannelCreate(channelname string, m map[string]string) (*struct {
-	Body []struct {
-		CID string `json:"cid"`
-	} `json:"body"`
-	Status Status `json:"status"`
-}, error) {
+func (c *Client) ChannelCreate(channelname string, m map[string]string) (*ChannelCreate, error) {
 	values := url.Values{}
 	for k, v := range m {
 		values.Add(k, v)
@@ -75,18 +65,11 @@ func (c *Client) ChannelCreate(channelname string, m map[string]string) (*struct
 	url := fmt.Sprintf("%s/1/channelcreate?api-key=%s&channel_name=%s&%s", c.WebQuery, c.APIKey, channelname, values.Encode())
 	body, err := Get(url)
 	if err != nil {
-		log.Println("Error reading response body:", err)
 		return nil, err
 	}
-	var response struct {
-		Body []struct {
-			CID string `json:"cid"`
-		} `json:"body"`
-		Status Status `json:"status"`
-	}
+	var response ChannelCreate
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		log.Println("Error unmarshalling JSON:", err)
 		return nil, err
 	}
 	return &response, nil
@@ -112,7 +95,6 @@ func (c *Client) ChannelEdit(cid string, m map[string]string) (*struct {
 	url := fmt.Sprintf("%s/1/channeledit?api-key=%s&cid=%s&%s", c.WebQuery, c.APIKey, cid, values.Encode())
 	body, err := Get(url)
 	if err != nil {
-		log.Println("Error reading response body:", err)
 		return nil, err
 	}
 	var response struct {
@@ -120,7 +102,6 @@ func (c *Client) ChannelEdit(cid string, m map[string]string) (*struct {
 	}
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		log.Println("Error unmarshalling JSON:", err)
 		return nil, err
 	}
 	return &response, nil
