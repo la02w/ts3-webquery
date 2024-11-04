@@ -26,13 +26,13 @@ func (c *Client) ChannelList() (*ChannelList, error) {
 // Displays detailed configuration information about a channel including ID, topic, description, etc. For detailed information, see Channel Properties.
 //
 // 显示关于一个频道的详细配置信息，包括 ID、主题、描述等。有关详细信息，请参阅频道属性。
-func (c *Client) ChannelInfo(cid string) (*ChannelInfo, error) {
+func (c *Client) ChannelInfo(cid string) (*ChannelInfos, error) {
 	url := c.WebQuery + "/1/channelinfo?api-key=" + c.APIKey + "&cid=" + cid
 	body, err := Get(url)
 	if err != nil {
 		return nil, err
 	}
-	var response ChannelInfo
+	var response ChannelInfos
 	err = json.Unmarshal(body, &response)
 	if err != nil {
 		return nil, err
