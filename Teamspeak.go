@@ -2,8 +2,8 @@ package ts3_webquery
 
 import (
 	"io"
-	"log"
 	"net/http"
+	"time"
 )
 
 type Client struct {
@@ -20,9 +20,11 @@ func Login(w string, a string) (*Client, error) {
 }
 
 func Get(url string) ([]byte, error) {
-	resp, err := http.Get(url)
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+	resp, err := client.Get(url)
 	if err != nil {
-		log.Println("Error fetching URL:", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
