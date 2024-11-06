@@ -59,7 +59,7 @@ func (c *Client) ChannelMove(cid string, cpid string, order string) (any, error)
 // Creates a new channel using the given properties and displays its ID. Note that this command accepts multiple properties which means that you're able to specifiy all settings of the new channel at once. For detailed information, see Channel Properties.
 //
 // 创建一个新频道，使用给定的属性并显示其 ID。请注意，此命令接受多个属性，这意味着你能够一次性指定新频道的所有设置。有关详细信息，请参阅频道属性。
-func (c *Client) ChannelCreate(channelname string, data map[string]string) (*Response, error) {
+func (c *Client) ChannelCreate(data map[string]string) (*Response, error) {
 	url := fmt.Sprintf("%s/1/channelcreate?api-key=%s", c.WebQuery, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
@@ -83,7 +83,7 @@ func (c *Client) ChannelDelete(cid string, force bool) (any, error) {
 // Changes a channels configuration using given properties. Note that this command accepts multiple properties which means that you're able to change all settings of the channel specified with cid at once. For detailed information, see Channel Properties.
 //
 // 更改频道的配置，使用给定的属性。请注意，此命令接受多个属性，这意味着你能够一次性更改指定 cid 频道的所有设置。有关详细信息，请参阅频道属性。
-func (c *Client) ChannelEdit(cid string, data map[string]string) (*Status, error) {
+func (c *Client) ChannelEdit(data map[string]string) (*Status, error) {
 	url := fmt.Sprintf("%s/1/channeledit?api-key=%s", c.WebQuery, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
