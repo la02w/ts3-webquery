@@ -23,8 +23,7 @@ func main() {
     	// base func
 	resp, _ := c.ServerInfo()
 	log.Println("serverinfo:",resp.Status.Code,resp.Status.Message)
-	log.Println()
-   	 // Modify and Add Parameters
+ 	// Modify and Add Parameters
 	data := map[string]string{
 		"channel_name":     "channel_name",
 		"channel_password": "abc",
@@ -33,11 +32,11 @@ func main() {
 	resp, _ = c.ChannelCreate(data)
 	log.Println("channelcreate:",resp.Status.Code,resp.Status.Message)
   	  // Use Cmd
-  	  resp, _ = c.Cmd("version")
+  	resp, _ = c.Cmd("version")
 	for _, body := range *resp.Body {
 		log.Println("version:",*body.Platform, *body.Version, *body.Build)
 	}
-   	 // Use ExecCmd
+	// Use ExecCmd
 	data = map[string]string{
 		"cldbid": "2",
 	}
@@ -46,7 +45,6 @@ func main() {
 		log.Println("clientdbinfo#nick_name:",*body.ClientNickname)
 	}
 }
-
 ```
 
 ```log
