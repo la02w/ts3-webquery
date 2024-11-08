@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 )
 
-func (c *Client) ClientList() (*Response, error) {
+func (c *Client) ClientList(data map[string]string) (*Response, error) {
 	url := c.WebQuery + "/1/clientlist?api-key=" + c.APIKey
-	body, err := Get(url, c.TimeOut)
+	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
 	}

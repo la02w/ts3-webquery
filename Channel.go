@@ -8,9 +8,9 @@ import (
 // Displays a list of channels created on a virtual server including their ID, order, name, etc. The output can be modified using several command options.
 //
 //	显示在虚拟服务器上创建的频道列表，包括它们的 ID、排序、名称等。输出可以通过使用多个命令选项进行修改。
-func (c *Client) ChannelList() (*Response, error) {
+func (c *Client) ChannelList(data map[string]string) (*Response, error) {
 	url := c.WebQuery + "/1/channellist?api-key=" + c.APIKey
-	body, err := Get(url, c.TimeOut)
+	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
 	}
