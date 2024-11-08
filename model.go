@@ -2,7 +2,7 @@ package ts3_webquery
 
 type Response struct {
 	Body   []Body `json:"body,omitempty"`
-	Status Status `json:"status"`
+	Status Result `json:"status"`
 }
 
 // login serveradmin Ox3uLCud
@@ -849,7 +849,11 @@ type Body struct {
 }
 
 type Status struct {
+	Status Result `json:"status"`
+}
+
+type Result struct {
 	Code         int    `json:"code"`
-	ExtraMessage string `json:"extra_message,omitempty"`
 	Message      string `json:"message"`
+	ExtraMessage string `json:"extra_message,omitempty"`
 }
