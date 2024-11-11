@@ -7,8 +7,9 @@ import (
 	"time"
 )
 
+var c, _ = Login("http://127.0.0.1:10080", "BABf9LIMFyscvC4X68S4WBDlGIRO8wR2XupSTni", 5*time.Second)
+
 func TestAPIKeyAdd(t *testing.T) {
-	c, _ := Login("http://127.0.0.1:10080", "BABf9LIMFyscvC4X68S4WBDlGIRO8wR2XupSTni", 5*time.Second)
 	data := map[string]string{
 		"scope": "read",
 	}
@@ -21,8 +22,6 @@ func TestAPIKeyAdd(t *testing.T) {
 }
 
 func TestAPIKeyDels(t *testing.T) {
-	// t.Log("del")
-	c, _ := Login("http://127.0.0.1:10080", "BABf9LIMFyscvC4X68S4WBDlGIRO8wR2XupSTni", 5*time.Second)
 	resp, err := c.APIKeyDel("22")
 	if err != nil {
 		t.Log(err)
@@ -32,7 +31,6 @@ func TestAPIKeyDels(t *testing.T) {
 }
 
 func TestAPIKeyList(t *testing.T) {
-	c, _ := Login("http://127.0.0.1:10080", "BABf9LIMFyscvC4X68S4WBDlGIRO8wR2XupSTni", 5*time.Second)
 	data := map[string]string{
 		"-count": "",
 	}
