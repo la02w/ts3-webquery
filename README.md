@@ -6,6 +6,28 @@
 go get -u github.com/la02w/ts3-webquery
 ```
 
+### Install Teamspeak HTTP Server
+
+> Create Query WhiteList
+
+```bash
+mkdir -p  $HOME/.config/ts3server
+# all ipv4 ipv6
+cat > $HOME/.config/ts3server/query_ip_allowlist.txt << EOF
+0.0.0.0/0
+::/0
+EOF
+```
+
+```bash
+docker run -p 9987:9987/udp -p 10080:10080 \
+-e TS3SERVER_LICENSE=accept \
+-e TS3SERVER_QUERY_PROTOCOLS=raw,http \
+-v $HOME/.config/ts3server/query_ip_allowlist.txt:/var/ts3server/query_ip_allowlist.txt \
+--restart=always \
+--name teamspeak teamspeak
+```
+
 ### Use
 
 ```go
