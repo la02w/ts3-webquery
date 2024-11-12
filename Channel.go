@@ -46,7 +46,7 @@ import (
 //	'permsid' : server id of permission
 //	'permvalue' : value of the permission
 func (c *Client) ChannelAddPerm(data map[string]string) (*Status, error) {
-	url := c.WebQuery + "/1/channeladdperm?api-key=" + c.APIKey
+	url := c.WebQuery + "/%s/channeladdperm?api-key=" + c.APIKey
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -75,7 +75,7 @@ func (c *Client) ChannelAddPerm(data map[string]string) (*Status, error) {
 //	'permsid' : server id of permission
 //	'permvalue' : value of the permission
 func (c *Client) ChannelClientAddPerm(data map[string]string) (*Status, error) {
-	url := c.WebQuery + "/1/channelclientaddperm?api-key=" + c.APIKey
+	url := c.WebQuery + "/%s/channelclientaddperm?api-key=" + c.APIKey
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -103,7 +103,7 @@ func (c *Client) ChannelClientAddPerm(data map[string]string) (*Status, error) {
 //	'permid' : integer : id of permission
 //	'permsid' : server id of permission
 func (c *Client) ChannelClientDelPerm(data map[string]string) (*Status, error) {
-	url := c.WebQuery + "/1/channelclientdelperm?api-key=" + c.APIKey
+	url := c.WebQuery + "/%s/channelclientdelperm?api-key=" + c.APIKey
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -128,7 +128,7 @@ func (c *Client) ChannelClientDelPerm(data map[string]string) (*Status, error) {
 //	'cldbid' : integer : id of client
 //	'-permsid' : include `permsid`
 func (c *Client) ChannelClientPermList(data map[string]string) (*Response, error) {
-	url := c.WebQuery + "/1/channelclientpermlist?api-key=" + c.APIKey
+	url := c.WebQuery + "/%s/channelclientpermlist?api-key=" + c.APIKey
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -155,7 +155,7 @@ func (c *Client) ChannelClientPermList(data map[string]string) (*Response, error
 //	'channel_name' : Name of the channel
 //	'channel_propertie'....
 func (c *Client) ChannelCreate(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelcreate?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelcreate?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -181,7 +181,7 @@ func (c *Client) ChannelCreate(data map[string]string) (*Response, error) {
 //	'cid' : integer : id of channel
 //	'force' : integer : set to 1 to force deletion
 func (c *Client) ChannelDelete(cid string, force string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channeldelete?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channeldelete?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"cid":   cid,
 		"force": force,
@@ -211,7 +211,7 @@ func (c *Client) ChannelDelete(cid string, force string) (*Status, error) {
 //	'permid' : integer : id of permission
 //	'permsid' : server id of permission
 func (c *Client) ChannelDelPerm(data map[string]string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channeldelperm?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channeldelperm?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -235,10 +235,10 @@ func (c *Client) ChannelDelPerm(data map[string]string) (*Status, error) {
 //
 // Parameters:
 //
-//	cid : integer : id of channel
+//	'cid' : integer : id of channel
 //	'channel_properties'...
 func (c *Client) ChannelEdit(data map[string]string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channeledit?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channeledit?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -261,7 +261,7 @@ func (c *Client) ChannelEdit(data map[string]string) (*Status, error) {
 //
 //	'pattern' : pattern must be part of the channels name (case insensitive)
 func (c *Client) ChannelFind(pattern string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channelfind?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelfind?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"pattern": pattern,
 	}
@@ -290,7 +290,7 @@ func (c *Client) ChannelFind(pattern string) (*Status, error) {
 //	'name' : name of the channel group
 //	'type' : integer:`0` (template), `1` (regular), `2` (query); Default: `1`
 func (c *Client) ChannelGroupAdd(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelgroupadd?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgroupadd?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -319,7 +319,7 @@ func (c *Client) ChannelGroupAdd(data map[string]string) (*Response, error) {
 //	'permsid' : server id of permission
 //	'permvalue' : value of the permission
 func (c *Client) ChannelGroupAddPerm(data map[string]string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channelgroupaddperm?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgroupaddperm?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -346,7 +346,7 @@ func (c *Client) ChannelGroupAddPerm(data map[string]string) (*Status, error) {
 //	'cldbid' : integer : only list entries of this client
 //	'cgid' : integer : only list entries of this channel group
 func (c *Client) ChannelGroupClientList(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelgroupclientlist?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgroupclientlist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -377,7 +377,7 @@ func (c *Client) ChannelGroupClientList(data map[string]string) (*Response, erro
 //	'name' : string : the name of the new group (ignored if `tcgid` is set)
 //	'type' : integer : group type `0` (template), `1` (regular), `2` (query)
 func (c *Client) ChannelGroupCopy(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelgroupcopy?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgroupcopy?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -402,7 +402,7 @@ func (c *Client) ChannelGroupCopy(data map[string]string) (*Response, error) {
 //	'cgid' : integer : channel group id
 //	'force' : integer : set to 1 to force deletion even if clients are present
 func (c *Client) ChannelGroupDel(cgid string, force string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channelgroupdel?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgroupdel?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"cgid":  cgid,
 		"force": force,
@@ -424,7 +424,7 @@ func (c *Client) ChannelGroupDel(cgid string, force string) (*Status, error) {
 // Description:
 // Parameters:
 func (c *Client) ChannelGroupDelPerm(data map[string]string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channelgroupdelperm?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgroupdelperm?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -452,7 +452,7 @@ func (c *Client) ChannelGroupDelPerm(data map[string]string) (*Status, error) {
 //	'permid' : integer : id of permission
 //	'permsid' : server id of permission
 func (c *Client) ChannelGroupList() (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelgrouplist?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgrouplist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Get(url, c.TimeOut)
 	if err != nil {
 		return nil, err
@@ -478,7 +478,7 @@ func (c *Client) ChannelGroupList() (*Response, error) {
 //	'cgid' : integer : id of channel group
 //	'-permsid' : include `permsid
 func (c *Client) ChannelGroupPermList(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelgrouppermlist?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgrouppermlist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -502,7 +502,7 @@ func (c *Client) ChannelGroupPermList(data map[string]string) (*Response, error)
 //	'cgid' : integer:id of channel group
 //	'name' : new name of the channel group
 func (c *Client) ChannelGroupRename(cgid string, name string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channelgrouprename?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelgrouprename?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"cgid": cgid,
 		"name": name,
@@ -531,7 +531,7 @@ func (c *Client) ChannelGroupRename(cgid string, name string) (*Status, error) {
 //
 //	'cid' : integer : The channel you're interested in
 func (c *Client) ChannelInfo(cid string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelinfo?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelinfo?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"cid": cid,
 	}
@@ -562,7 +562,7 @@ func (c *Client) ChannelInfo(cid string) (*Response, error) {
 //	'-secondsempty' : include `seconds_empty`
 //	'-banners' : include `channel_banner_gfx_url` and `channel_banner_mode`
 func (c *Client) ChannelList(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channellist?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channellist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -590,7 +590,7 @@ func (c *Client) ChannelList(data map[string]string) (*Response, error) {
 //	'cpid' : integer : id of parent channel
 //	'order' : integer : id of upper sibling channel
 func (c *Client) ChannelMove(data map[string]string) (*Status, error) {
-	url := fmt.Sprintf("%s/1/channelmove?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelmove?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -614,7 +614,7 @@ func (c *Client) ChannelMove(data map[string]string) (*Status, error) {
 //	'cid' : integer : id of channel
 //	'-permsid' : include `permsid`
 func (c *Client) ChannelPermList(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/channelpermlist?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/channelpermlist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err

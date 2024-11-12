@@ -25,7 +25,7 @@ banlist	| list ban rules on a virtual server
 //
 //	must be set: 'ip', 'name', 'uid', or 'mytsid'.
 func (c *Client) BanAdd(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/banadd?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/banadd?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (c *Client) BanAdd(data map[string]string) (*Response, error) {
 //	'time' : integer : time in seconds the ban will be active
 //	'banreason' : text describing the reaso
 func (c *Client) BanClient(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/banclient?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/banclient?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
@@ -62,7 +62,7 @@ func (c *Client) BanClient(data map[string]string) (*Response, error) {
 //
 //	'banid' : integer : id of ban to be deleted
 func (c *Client) BanDel(banid string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/bandel?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/bandel?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"banid": banid,
 	}
@@ -82,7 +82,7 @@ func (c *Client) BanDel(banid string) (*Response, error) {
 //
 //	Deletes all active ban rules from the server
 func (c *Client) BanDellAll() (*Status, error) {
-	url := fmt.Sprintf("%s/1/bandelall?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/bandelall?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Get(url, c.TimeOut)
 	if err != nil {
 		return nil, err
@@ -101,7 +101,7 @@ func (c *Client) BanDellAll() (*Status, error) {
 //	start : integer : skip the first `n` entries
 //	duration : integer : only return `n` entries
 func (c *Client) BanList(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/1/banlist?api-key=%s", c.WebQuery, c.APIKey)
+	url := fmt.Sprintf("%s/%s/banlist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err

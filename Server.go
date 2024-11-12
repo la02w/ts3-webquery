@@ -156,7 +156,7 @@ func (c *Client) ServerIDGetByPort() {}
 //
 // Parameters:
 func (c *Client) ServerInfo() (*Response, error) {
-	url := c.WebQuery + "/1/serverinfo?api-key=" + c.APIKey
+	url := c.WebQuery + "/" + c.Sid + "/serverinfo?api-key=" + c.APIKey
 	body, err := Get(url, c.TimeOut)
 	if err != nil {
 		return nil, err

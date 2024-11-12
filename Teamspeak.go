@@ -9,16 +9,18 @@ import (
 )
 
 type Client struct {
+	Sid      string
 	WebQuery string
 	APIKey   string
 	TimeOut  time.Duration
 }
 
-func Login(webquery string, apikey string, timeout time.Duration) (*Client, error) {
+func Login(webquery string, apikey string, sid string, timeout time.Duration) (*Client, error) {
 	c := &Client{
 		WebQuery: webquery,
 		APIKey:   apikey,
 		TimeOut:  timeout,
+		Sid:      sid,
 	}
 	return c, nil
 }
