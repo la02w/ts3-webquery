@@ -15,12 +15,10 @@ type Client struct {
 	TimeOut  time.Duration
 }
 
-func Login(webquery string, apikey string, sid string, timeout time.Duration) (*Client, error) {
+func Login(webquery string, apikey string) (*Client, error) {
 	c := &Client{
 		WebQuery: webquery,
 		APIKey:   apikey,
-		TimeOut:  timeout,
-		Sid:      sid,
 	}
 	return c, nil
 }

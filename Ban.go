@@ -26,7 +26,7 @@ banlist	| list ban rules on a virtual server
 //	must be set: 'ip', 'name', 'uid', or 'mytsid'.
 func (c *Client) BanAdd(data map[string]string) (*Response, error) {
 	url := fmt.Sprintf("%s/%s/banadd?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
-	body, err := Post(url, c.TimeOut, data)
+	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *Client) BanAdd(data map[string]string) (*Response, error) {
 //	'banreason' : text describing the reaso
 func (c *Client) BanClient(data map[string]string) (*Response, error) {
 	url := fmt.Sprintf("%s/%s/banclient?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
-	body, err := Post(url, c.TimeOut, data)
+	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (c *Client) BanDel(banid string) (*Response, error) {
 	data := map[string]string{
 		"banid": banid,
 	}
-	body, err := Post(url, c.TimeOut, data)
+	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +83,7 @@ func (c *Client) BanDel(banid string) (*Response, error) {
 //	Deletes all active ban rules from the server
 func (c *Client) BanDellAll() (*Status, error) {
 	url := fmt.Sprintf("%s/%s/bandelall?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
-	body, err := Get(url, c.TimeOut)
+	body, err := Get(url, CheckTimeOut(c.TimeOut))
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (c *Client) BanDellAll() (*Status, error) {
 //	duration : integer : only return `n` entries
 func (c *Client) BanList(data map[string]string) (*Response, error) {
 	url := fmt.Sprintf("%s/%s/banlist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
-	body, err := Post(url, c.TimeOut, data)
+	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
 	if err != nil {
 		return nil, err
 	}
