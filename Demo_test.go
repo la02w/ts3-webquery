@@ -38,5 +38,5 @@ func TestDemo(t *testing.T) {
 	for _, body := range resp.Body {
 		log.Println("clientdbinfo#nick_name:", body.ClientNickname)
 	}
-	SaveToJSONFile(resp)
+	SaveToJSONFile(resp, "test.json")
 }

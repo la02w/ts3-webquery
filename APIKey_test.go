@@ -12,7 +12,7 @@ func TestAPIKeyAdd(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
 
@@ -21,7 +21,7 @@ func TestAPIKeyDels(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
 
@@ -33,6 +33,6 @@ func TestAPIKeyList(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }

@@ -20,7 +20,7 @@ func TestBanAdd(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
 
@@ -32,7 +32,7 @@ func TestBanClient(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
 
@@ -41,7 +41,7 @@ func TestBanDel(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
 
@@ -50,7 +50,7 @@ func TestBanDelAll(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
 
@@ -62,6 +62,6 @@ func TestBanList(t *testing.T) {
 	if err != nil {
 		t.Log(err)
 	} else {
-		SaveToJSONFile(resp)
+		SaveToJSONFile(resp, "test.json")
 	}
 }
