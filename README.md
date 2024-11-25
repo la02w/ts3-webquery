@@ -33,7 +33,12 @@ docker run -p 9987:9987/udp -p 10080:10080 \
 ```go
 package main
 
-import ts3 "github.com/la02w/ts3-webquery/v2"
+import (
+	"encoding/json"
+	"os"
+
+	ts3 "github.com/la02w/ts3-webquery/v2"
+)
 
 func main() {
 	c, _ := ts3.Login("http://127.0.0.1:10080", "BABc-CoPxT9lBZ5CB6gFSUdAIbbWZu1ZsSbUUj3")
