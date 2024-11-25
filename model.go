@@ -11,12 +11,12 @@ type Body struct {
 	// apikeyadd
 	APIKey    string `json:"apikey,omitempty"`
 	ClDBID    string `json:"cldbid,omitempty"`
-	CreatedAt string `json:"createdat,omitempty"`
-	ExpiresAt string `json:"expiresat,omitempty"`
+	CreatedAt string `json:"created_at,omitempty"`
+	ExpiresAt string `json:"expires_at,omitempty"`
 	ID        string `json:"id,omitempty"`
 	Scope     string `json:"scope,omitempty"`
 	SID       string `json:"sid,omitempty"`
-	TimeLeft  string `json:"timeleft,omitempty"`
+	TimeLeft  string `json:"time_left,omitempty"`
 	// 	apikeydel
 	// 	apikeylist
 	Count string `json:"count,omitempty"`

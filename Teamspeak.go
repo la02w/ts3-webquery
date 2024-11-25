@@ -2,50 +2,77 @@ package ts3_webquery
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"strings"
-	"time"
 )
 
-type Client struct {
-	Sid      string
-	WebQuery string
-	APIKey   string
-	TimeOut  time.Duration
+type Clinet struct {
+	Url     string
+	Key     string
+	Sid     string
+	Commond string
+	Data    map[string]string
 }
 
-func Login(webquery string, apikey string) (*Client, error) {
-	c := &Client{
-		WebQuery: webquery,
-		APIKey:   apikey,
+// 登录
+func Login(url string, key string) (*Clinet, error) {
+	c := &Clinet{
+		Url: url,
+		Key: key,
 	}
 	c.Sid = "1"
-	c.TimeOut = 10 * time.Second
 	return c, nil
 }
 
-func Get(url string, timeout time.Duration) ([]byte, error) {
-	client := http.Client{
-		Timeout: timeout,
-	}
-	resp, err := client.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
+// 设置SID
+func (c *Clinet) SetSid(sid string) *Clinet {
+	c.Sid = sid
+	return c
 }
 
-func Post(url string, timeout time.Duration, body map[string]string) ([]byte, error) {
-	client := http.Client{
-		Timeout: timeout,
-	}
-	reader, _ := json.Marshal(body)
-	resp, err := client.Post(url, "application/json", strings.NewReader(string(reader)))
+// 查询命令
+func (c *Clinet) Exec(commond string) *Clinet {
+	c.Commond = commond
+	return c
+}
+
+// 设置查询配置
+func (c *Clinet) SetData(data map[string]string) *Clinet {
+	c.Data = data
+	return c
+}
+
+// 创建HTTP请求获取数据
+func (c *Clinet) GetData() *Response {
+	reader, _ := json.Marshal(c.Data)
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s/%s", c.Url, c.Sid, c.Commond), strings.NewReader(string(reader)))
 	if err != nil {
-		return nil, err
+		fmt.Println("Error creating request:", err)
+		return nil
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("x-api-key", c.Key)
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error sending request:", err)
+		return nil
 	}
 	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+		return nil
+	}
+	var response Response
+	err = json.Unmarshal(respBody, &response)
+	if err != nil {
+		fmt.Println("Error reading response body:", err)
+		return nil
+	}
+	return &response
 }
