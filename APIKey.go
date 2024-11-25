@@ -11,8 +11,8 @@ import (
 //	['lifetime'={days}]
 //	['cldbid'={clientDBID}]
 func (c *Client) APIKeyAdd(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/%s/apikeyadd?api-key=%s", c.WebQuery, CheckServerID(c.Sid), c.APIKey)
-	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
+	url := fmt.Sprintf("%s/%s/apikeyadd?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
+	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
 	}
@@ -28,11 +28,11 @@ func (c *Client) APIKeyAdd(data map[string]string) (*Response, error) {
 //
 //	'id'={APIKeyID}
 func (c *Client) APIKeyDel(id string) (*Status, error) {
-	url := fmt.Sprintf("%s/%s/apikeydel?api-key=%s", c.WebQuery, CheckServerID(c.Sid), c.APIKey)
+	url := fmt.Sprintf("%s/%s/apikeydel?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
 	data := map[string]string{
 		"id": id,
 	}
-	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
+	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
 	}
@@ -52,8 +52,8 @@ func (c *Client) APIKeyDel(id string) (*Status, error) {
 //	['duration'={limit}]
 //	['-count']
 func (c *Client) APIKeyList(data map[string]string) (*Response, error) {
-	url := fmt.Sprintf("%s/%s/apikeylist?api-key=%s", c.WebQuery, CheckServerID(c.Sid), c.APIKey)
-	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
+	url := fmt.Sprintf("%s/%s/apikeylist?api-key=%s", c.WebQuery, c.Sid, c.APIKey)
+	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
 	}

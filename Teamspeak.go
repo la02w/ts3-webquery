@@ -20,6 +20,8 @@ func Login(webquery string, apikey string) (*Client, error) {
 		WebQuery: webquery,
 		APIKey:   apikey,
 	}
+	c.Sid = "1"
+	c.TimeOut = 10 * time.Second
 	return c, nil
 }
 

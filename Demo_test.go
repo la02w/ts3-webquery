@@ -7,7 +7,7 @@ import (
 
 func TestDemo(t *testing.T) {
 	// No need to import packages for local testing
-	c, _ := Login("http://127.0.0.1:10080", "BABf9LIMFyscvC4X68S4WBDlGIRO8wR2XupSTni")
+	c, _ := Login("http://127.0.0.1:10080", "BADFT4lJiYVwNMrE7US5j2R9H01fIF9HPBkvVpl")
 	// set properties
 	// c.Sid = "1"
 	// c.TimeOut = 5 * time.Second

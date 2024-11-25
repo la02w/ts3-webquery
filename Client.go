@@ -130,8 +130,8 @@ func (c *Client) ClientKick() {}
 //	'-icon' : Adds the client icon id
 //	'-badges' : Reports on the clients badges
 func (c *Client) ClientList(data map[string]string) (*Response, error) {
-	url := c.WebQuery + "/" + CheckServerID(c.Sid) + "/clientlist?api-key=" + c.APIKey
-	body, err := Post(url, CheckTimeOut(c.TimeOut), data)
+	url := c.WebQuery + "/" + c.Sid + "/clientlist?api-key=" + c.APIKey
+	body, err := Post(url, c.TimeOut, data)
 	if err != nil {
 		return nil, err
 	}
