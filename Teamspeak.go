@@ -19,34 +19,32 @@ type Clinet struct {
 }
 
 // 登录
-func Login(url string, key string) (*Clinet, error) {
+func Login(url string, key string) *Clinet {
 	c := &Clinet{
 		Url: url,
 		Key: key,
 	}
 	c.Sid = "1"
 	c.TimeOut = 5 * time.Second
-	err := testLink(url)
-	if err != nil {
-		return nil, err
-	}
-	return c, nil
+	return c
 }
 
 // 测试连接
-func testLink(url string) error {
+func (c *Clinet) Test() *Result {
 	client := &http.Client{
-		Timeout: 10 * time.Second,
+		Timeout: c.TimeOut,
 	}
-
-	resp, err := client.Get(url)
+	resp, err := client.Get(c.Url)
 	if err != nil {
-		return err
+		return &Result{
+			Code:    502,
+			Message: "Error: Client.Timeout exceeded while awaiting headers",
+		}
 	}
 	defer resp.Body.Close()
-
-	if resp.StatusCode == http.StatusBadGateway {
-		return fmt.Errorf("server returned non-200 status: %d %s", resp.StatusCode, resp.Status)
+	response := c.Exec("serverinfo").GetData()
+	if response.Status.Code != 0 {
+		return &response.Status
 	}
 	return nil
 }
