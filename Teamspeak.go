@@ -26,6 +26,7 @@ func Login(url string, key string) *Clinet {
 	}
 	c.Sid = "1"
 	c.TimeOut = 5 * time.Second
+	c.Commond = "version"
 	return c
 }
 
@@ -42,7 +43,7 @@ func (c *Clinet) Test() *Result {
 		}
 	}
 	defer resp.Body.Close()
-	response := c.Exec("serverinfo").GetData()
+	response, _ := c.Exec("version").GetData()
 	if response.Status.Code != 0 {
 		return &response.Status
 	}
@@ -73,12 +74,15 @@ func (c *Clinet) SetData(data map[string]string) *Clinet {
 }
 
 // 创建HTTP请求获取数据
-func (c *Clinet) GetData() *Response {
+func (c *Clinet) GetData() (*Response, *Result) {
 	reader, _ := json.Marshal(c.Data)
 	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s/%s", c.Url, c.Sid, c.Commond), strings.NewReader(string(reader)))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
-		return nil
+		return nil, &Result{
+			Code:    502,
+			Message: err.Error(),
+		}
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -89,20 +93,29 @@ func (c *Clinet) GetData() *Response {
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)
-		return nil
+		return nil, &Result{
+			Code:    502,
+			Message: err.Error(),
+		}
 	}
 	defer resp.Body.Close()
 
 	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
-		return nil
+		return nil, &Result{
+			Code:    502,
+			Message: err.Error(),
+		}
 	}
 	var response Response
 	err = json.Unmarshal(respBody, &response)
 	if err != nil {
 		fmt.Println("Error reading response body:", err)
-		return nil
+		return nil, &Result{
+			Code:    502,
+			Message: err.Error(),
+		}
 	}
-	return &response
+	return &response, nil
 }
