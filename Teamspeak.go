@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type Clinet struct {
@@ -13,6 +14,7 @@ type Clinet struct {
 	Key     string
 	Sid     string
 	Commond string
+	TimeOut time.Duration
 	Data    map[string]string
 }
 
@@ -23,12 +25,18 @@ func Login(url string, key string) (*Clinet, error) {
 		Key: key,
 	}
 	c.Sid = "1"
+	c.TimeOut = 5 * time.Second
 	return c, nil
 }
 
 // 设置SID
 func (c *Clinet) SetSid(sid string) *Clinet {
 	c.Sid = sid
+	return c
+}
+
+func (c *Clinet) SetTimeOut(time time.Duration) *Clinet {
+	c.TimeOut = time
 	return c
 }
 
@@ -55,7 +63,9 @@ func (c *Clinet) GetData() *Response {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("x-api-key", c.Key)
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: c.TimeOut,
+	}
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error sending request:", err)
