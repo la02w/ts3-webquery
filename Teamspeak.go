@@ -26,7 +26,29 @@ func Login(url string, key string) (*Clinet, error) {
 	}
 	c.Sid = "1"
 	c.TimeOut = 5 * time.Second
+	err := testLink(url)
+	if err != nil {
+		return nil, err
+	}
 	return c, nil
+}
+
+// 测试连接
+func testLink(url string) error {
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	resp, err := client.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode == http.StatusBadGateway {
+		return fmt.Errorf("server returned non-200 status: %d %s", resp.StatusCode, resp.Status)
+	}
+	return nil
 }
 
 // 设置SID
